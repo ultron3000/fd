@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Final Destination</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: black;
+      color: #ffcc00;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2em;
+    }
+    .movies {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .movie {
+      background: #222;
+      border: 2px solid #ffcc00;
+      border-radius: 12px;
+      width: 200px;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .movie:hover {
+      transform: scale(1.05);
+      background: #333;
+    }
+    .movie img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .movie-title {
+      margin-top: 10px;
+      font-size: 1em;
+      font-weight: bold;
+    }
+  
+    @media (max-width: 600px) {
+      .movies {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+      .movie {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .movie img {
+        height: auto;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<h1>🚨 Final Destination Universe</h1>
+<input id="searchBar" placeholder="Search Final Destination movies..." style="width: calc(100% - 40px);max-width: 100%;margin: 20px auto;padding: 10px 15px;font-size: 1em;border-radius: 8px;border: 2px solid #ffcc00;background: #111;color: #ffcc00;box-shadow: 0 0 10px #ffcc00a0;display: block;" type="text"/>
+<div class="movies" id="movies"></div>
+<script>
+const movies = [
+  { title: "Final Destination-2000", video: "https://sxic.madrigalcajig.sbs:443/v4/ox/itaov/index-f1-v1-a1.txt", image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTv8-Jramx1ev5KtVbjREuROCQnS5XYWoMfaopqWLnj1RSFw7iSIxQdWGyXE8rxwEui2f2JHg" },
+  { title: "Final Destination 2-2003", video: "https://scvo.sperlinglayma.sbs:443/v4/xq/bnb5s/index-f2-v1-a1.txt", image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTCyktFkHXQaQow21ks9_WFYjsbBXMDSmpuaVdY2_cm6tJ_mvTXYHRac8rZuTfve-kB5PmBbQ" },
+  { title: "Final Destination 3-2006", video: "https://sr81.griseldakro.sbs:443/v4/xq/vluy1/index-f2-v1-a1.txt", image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTGQBxxvvQBIidnzP7mWTMHBm7fKlVdejPI_6T05XO_YlD07BsMUWO6Kh0UVUaZ6Rsq2CnG" },
+  { title: "The Final Destination-2009", video: "https://cdn-1.celestialodyssey.site/video-stream/a9803878/playlist.m3u8", image: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTYqY8RklDWvO3XbFDXDbBWyOHqyPSu7yGX4lZykeTQFceYhD2-p_4U4XcT3x8rhoVgJXmW" },
+  { title: "Final Destination 5-2011", video: "https://cdn-1.celestialodyssey.site/video-stream/32000510/playlist.m3u8", image: "https://play-lh.googleusercontent.com/OLNHdONrS-4n47CZXg_cN4CcuqQLFVGKq6bU-koD-EkGUSglHduMHT90L0LMDLteGwQ=w240-h480-rw" },
+  { title: "Final Destination Bloodlines-2025", video: "https://s3ae.alenapark.sbs:443/v4/ox/xqia6/index-f2-v1-a1.txt", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNFSPlzSzvfDieqjCJXOU717GcZj0yyBPmDS_UGc0G6qS9TjEn-9xgruwmGbgt4-v_zCsCZg" },
+ ];
+
+const container = document.getElementById('movies');
+movies.forEach((movie, index) => {
+  const div = document.createElement('div');
+  div.className = 'movie';
+  div.innerHTML = `
+    <img src="${movie.image}" alt="${movie.title}">
+    <div class="movie-title">${movie.title}</div>
+  `;
+  div.onclick = () => {
+    const url = `player.html?title=${encodeURIComponent(movie.title)}&video=${encodeURIComponent(movie.video)}&index=${index}`;
+    window.location.href = url;
+  };
+  container.appendChild(div);
+});
+// Live Search Filter
+
+document.getElementById('searchBar').addEventListener('input', function () {
+
+  const searchTerm = this.value.toLowerCase();
+
+  const movieDivs = document.querySelectorAll('.movie');
+
+  movieDivs.forEach(div => {
+
+    const title = div.querySelector('.movie-title').textContent.toLowerCase();
+
+    div.style.display = title.includes(searchTerm) ? 'block' : 'none';
+
+  });
+
+});    
+</script>
+
+</body>
+</html>
