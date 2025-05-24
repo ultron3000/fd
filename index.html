@@ -2,116 +2,404 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Final Destination</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Destination Universe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      background: black;
-      color: #ffcc00;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
     }
-    h1 {
-      margin-bottom: 20px;
-      font-size: 2em;
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 204, 0, 0.1);
     }
-    .movies {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 204, 0, 0.5);
+      border-radius: 5px;
     }
-    .movie {
-      background: #222;
-      border: 2px solid #ffcc00;
-      border-radius: 12px;
-      width: 200px;
-      padding: 10px;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-    .movie:hover {
-      transform: scale(1.05);
-      background: #333;
-    }
-    .movie img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-    .movie-title {
-      margin-top: 10px;
-      font-size: 1em;
-      font-weight: bold;
-    }
-  
-    @media (max-width: 600px) {
-      .movies {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-      }
-      .movie {
-        width: 100%;
-        box-sizing: border-box;
-      }
-      .movie img {
-        height: auto;
-      }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 204, 0, 0.7);
     }
 
+    /* Custom animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+
+    /* Glow effect */
+    .glow {
+      box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+    }
+
+    .glow:hover {
+      box-shadow: 0 0 25px rgba(255, 204, 0, 0.8);
+    }
+
+    /* Dark mode transition */
+    .dark-mode-transition {
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    /* Movie card hover effect */
+    .movie-card {
+      transition: all 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+    .movie-card:hover {
+      transform: translateY(-10px) scale(1.03) rotateX(5deg);
+    }
+
+    /* Loading spinner */
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
-<body>
+<body class="bg-gray-900 text-yellow-300 dark-mode-transition min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header with theme toggle -->
+    <header class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+      <div class="flex items-center gap-4">
+        <h1 class="text-3xl md:text-4xl font-bold flex items-center">
+          <i class="fas fa-skull-crossbones mr-3"></i>
+          Final Destination Universe
+        </h1>
+        <span class="bg-red-600 text-white text-xs px-2 py-1 rounded-full">18+</span>
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <!-- Theme toggle -->
+        <button id="themeToggle" class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition">
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+        
+        <!-- Filter dropdown -->
+        <div class="relative">
+          <button id="filterButton" class="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition">
+            <i class="fas fa-filter"></i>
+            <span>Filters</span>
+          </button>
+          <div id="filterDropdown" class="hidden absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-10 p-2">
+            <div class="mb-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2000"> 2000
+              </label>
+            </div>
+            <div class="mb-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2003"> 2003
+              </label>
+            </div>
+            <div class="mb-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2006"> 2006
+              </label>
+            </div>
+            <div class="mb-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2009"> 2009
+              </label>
+            </div>
+            <div class="mb-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2011"> 2011
+              </label>
+            </div>
+            <div>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2025"> 2025
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
 
-<h1>🚨 Final Destination Universe</h1>
-<input id="searchBar" placeholder="Search Final Destination movies..." style="width: calc(100% - 40px);max-width: 100%;margin: 20px auto;padding: 10px 15px;font-size: 1em;border-radius: 8px;border: 2px solid #ffcc00;background: #111;color: #ffcc00;box-shadow: 0 0 10px #ffcc00a0;display: block;" type="text"/>
-<div class="movies" id="movies"></div>
-<script>
-const movies = [
-  { title: "Final Destination-2000", video: "https://vip.opstream15.com:443/20220328/2369_db550f45/3000k/hls/mixed.m3u8", image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTv8-Jramx1ev5KtVbjREuROCQnS5XYWoMfaopqWLnj1RSFw7iSIxQdWGyXE8rxwEui2f2JHg" },
-  { title: "Final Destination 2-2003", video: "https://vip.opstream14.com/20220317/1368_69da2398/index.m3u8", image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTCyktFkHXQaQow21ks9_WFYjsbBXMDSmpuaVdY2_cm6tJ_mvTXYHRac8rZuTfve-kB5PmBbQ" },
-  { title: "Final Destination 3-2006", video: "https://vip.opstream14.com/20220317/1369_9c779713/index.m3u8", image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTGQBxxvvQBIidnzP7mWTMHBm7fKlVdejPI_6T05XO_YlD07BsMUWO6Kh0UVUaZ6Rsq2CnG" },
-  { title: "The Final Destination-2009", video: "https://vip.opstream14.com/20220317/1370_bc795be5/index.m3u8", image: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTYqY8RklDWvO3XbFDXDbBWyOHqyPSu7yGX4lZykeTQFceYhD2-p_4U4XcT3x8rhoVgJXmW" },
-  { title: "Final Destination 5-2011", video: "https://vip.opstream15.com/20220316/1417_f0970da9/index.m3u8", image: "https://play-lh.googleusercontent.com/OLNHdONrS-4n47CZXg_cN4CcuqQLFVGKq6bU-koD-EkGUSglHduMHT90L0LMDLteGwQ=w240-h480-rw" },
-  { title: "Final Destination Bloodlines-2025", video: "https://s3ae.alenapark.sbs:443/v4/ox/xqia6/index-f2-v1-a1.txt", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNFSPlzSzvfDieqjCJXOU717GcZj0yyBPmDS_UGc0G6qS9TjEn-9xgruwmGbgt4-v_zCsCZg" },
- ];
+    <!-- Search bar -->
+    <div class="relative mb-8 max-w-2xl mx-auto">
+      <input 
+        id="searchBar" 
+        type="text" 
+        placeholder="Search Final Destination movies..." 
+        class="w-full bg-gray-800 border-2 border-yellow-400 rounded-lg px-4 py-3 pl-12 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent glow transition"
+      >
+      <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-yellow-400"></i>
+    </div>
 
-const container = document.getElementById('movies');
-movies.forEach((movie, index) => {
-  const div = document.createElement('div');
-  div.className = 'movie';
-  div.innerHTML = `
-    <img src="${movie.image}" alt="${movie.title}">
-    <div class="movie-title">${movie.title}</div>
-  `;
-  div.onclick = () => {
-    const url = `player.html?title=${encodeURIComponent(movie.title)}&video=${encodeURIComponent(movie.video)}&index=${index}`;
-    window.location.href = url;
-  };
-  container.appendChild(div);
-});
-// Live Search Filter
+    <!-- Loading indicator -->
+    <div id="loading" class="flex justify-center items-center py-12 hidden">
+      <div class="spinner text-4xl text-yellow-400">
+        <i class="fas fa-spinner"></i>
+      </div>
+    </div>
 
-document.getElementById('searchBar').addEventListener('input', function () {
+    <!-- Movies grid -->
+    <div id="movies" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <!-- Movie cards will be inserted here by JavaScript -->
+    </div>
 
-  const searchTerm = this.value.toLowerCase();
+    <!-- Empty state -->
+    <div id="emptyState" class="hidden text-center py-12">
+      <i class="fas fa-film text-5xl mb-4 opacity-50"></i>
+      <h3 class="text-xl font-semibold">No movies found</h3>
+      <p class="text-gray-400 mt-2">Try adjusting your search or filters</p>
+    </div>
+  </div>
 
-  const movieDivs = document.querySelectorAll('.movie');
+  <script>
+    // Movie data
+    const movies = [
+      { 
+        title: "Final Destination (2000)", 
+        year: 2000,
+        video: "https://vip.opstream15.com:443/20220328/2369_db550f45/3000k/hls/mixed.m3u8", 
+        image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTv8-Jramx1ev5KtVbjREuROCQnS5XYWoMfaopqWLnj1RSFw7iSIxQdWGyXE8rxwEui2f2JHg",
+        rating: "R",
+        runtime: "98 min",
+        description: "After a teenager has a terrifying vision of him and his friends dying in a plane crash, he prevents the accident only to have Death hunt them down, one by one."
+      },
+      { 
+        title: "Final Destination 2 (2003)", 
+        year: 2003,
+        video: "https://vip.opstream14.com/20220317/1368_69da2398/index.m3u8", 
+        image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTCyktFkHXQaQow21ks9_WFYjsbBXMDSmpuaVdY2_cm6tJ_mvTXYHRac8rZuTfve-kB5PmBbQ",
+        rating: "R",
+        runtime: "90 min",
+        description: "When Kimberly has a violent premonition of a highway pileup, she blocks the freeway to keep several people from being killed. But Death continues to stalk those who were meant to die."
+      },
+      { 
+        title: "Final Destination 3 (2006)", 
+        year: 2006,
+        video: "https://vip.opstream14.com/20220317/1369_9c779713/index.m3u8", 
+        image: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTGQBxxvvQBIidnzP7mWTMHBm7fKlVdejPI_6T05XO_YlD07BsMUWO6Kh0UVUaZ6Rsq2CnG",
+        rating: "R",
+        runtime: "93 min",
+        description: "A student's premonition of a deadly rollercoaster crash saves her life and a few others, but Death stalks the survivors in the order they were meant to die."
+      },
+      { 
+        title: "The Final Destination (2009)", 
+        year: 2009,
+        video: "https://vip.opstream14.com/20220317/1370_bc795be5/index.m3u8", 
+        image: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTYqY8RklDWvO3XbFDXDbBWyOHqyPSu7yGX4lZykeTQFceYhD2-p_4U4XcT3x8rhoVgJXmW",
+        rating: "R",
+        runtime: "82 min",
+        description: "After a young man's premonition of a deadly race-car crash saves his life and those of his friends, Death stalks the survivors in the order they were meant to die."
+      },
+      { 
+        title: "Final Destination 5 (2011)", 
+        year: 2011,
+        video: "https://vip.opstream15.com/20220316/1417_f0970da9/index.m3u8", 
+        image: "https://play-lh.googleusercontent.com/OLNHdONrS-4n47CZXg_cN4CcuqQLFVGKq6bU-koD-EkGUSglHduMHT90L0LMDLteGwQ=w240-h480-rw",
+        rating: "R",
+        runtime: "92 min",
+        description: "Survivors of a suspension-bridge collapse learn there's no way to cheat Death when they begin dying in extremely unlikely ways."
+      },
+      { 
+        title: "Final Destination: Bloodlines (2025)", 
+        year: 2025,
+        video: "https://s3ae.alenapark.sbs:443/v4/ox/xqia6/index-f2-v1-a1.txt", 
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNFSPlzSzvfDieqjCJXOU717GcZj0yyBPmDS_UGc0G6qS9TjEn-9xgruwmGbgt4-v_zCsCZg",
+        rating: "NR",
+        runtime: "TBA",
+        description: "The sixth installment in the Final Destination franchise, exploring new deadly scenarios as Death continues its relentless pursuit."
+      }
+    ];
 
-  movieDivs.forEach(div => {
+    // DOM elements
+    const container = document.getElementById('movies');
+    const searchBar = document.getElementById('searchBar');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const filterButton = document.getElementById('filterButton');
+    const filterDropdown = document.getElementById('filterDropdown');
+    const loadingIndicator = document.getElementById('loading');
+    const emptyState = document.getElementById('emptyState');
 
-    const title = div.querySelector('.movie-title').textContent.toLowerCase();
+    // Current filters
+    let activeFilters = {
+      search: '',
+      years: []
+    };
 
-    div.style.display = title.includes(searchTerm) ? 'block' : 'none';
+    // Initialize the page
+    function init() {
+      renderMovies(movies);
+      setupEventListeners();
+      checkThemePreference();
+    }
 
-  });
+    // Render movie cards
+    function renderMovies(moviesToRender) {
+      container.innerHTML = '';
+      
+      if (moviesToRender.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      } else {
+        emptyState.classList.add('hidden');
+      }
 
-});    
-</script>
+      moviesToRender.forEach((movie, index) => {
+        const delayClass = `delay-${index % 5}`;
+        
+        const div = document.createElement('div');
+        div.className = `movie-card fade-in ${delayClass} bg-gray-800 rounded-xl overflow-hidden shadow-lg glow hover:shadow-xl transition-all duration-300`;
+        div.innerHTML = `
+          <div class="relative">
+            <img 
+              src="${movie.image}" 
+              alt="${movie.title}" 
+              class="w-full h-80 object-cover rounded-t-xl"
+              onerror="this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'"
+            >
+            <div class="absolute top-2 right-2 bg-black bg-opacity-70 text-yellow-400 px-2 py-1 rounded text-sm font-bold">
+              ${movie.rating}
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+              <h3 class="text-lg font-bold text-white">${movie.title}</h3>
+              <div class="flex justify-between text-sm text-gray-300 mt-1">
+                <span>${movie.year}</span>
+                <span>${movie.runtime}</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-4">
+            <p class="text-gray-300 text-sm line-clamp-3">${movie.description}</p>
+            <button class="mt-4 w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-4 rounded-lg transition flex items-center justify-center gap-2">
+              <i class="fas fa-play"></i>
+              Watch Now
+            </button>
+          </div>
+        `;
+        
+        div.addEventListener('click', () => {
+          showLoading();
+          setTimeout(() => {
+            const url = `player.html?title=${encodeURIComponent(movie.title)}&video=${encodeURIComponent(movie.video)}&index=${index}`;
+            window.location.href = url;
+          }, 500);
+        });
+        
+        container.appendChild(div);
+      });
+    }
 
+    // Filter movies based on active filters
+    function filterMovies() {
+      loadingIndicator.classList.remove('hidden');
+      
+      setTimeout(() => {
+        const filteredMovies = movies.filter(movie => {
+          // Search filter
+          const matchesSearch = movie.title.toLowerCase().includes(activeFilters.search.toLowerCase());
+          
+          // Year filter
+          const matchesYear = activeFilters.years.length === 0 || 
+                            activeFilters.years.includes(movie.year.toString());
+          
+          return matchesSearch && matchesYear;
+        });
+        
+        renderMovies(filteredMovies);
+        loadingIndicator.classList.add('hidden');
+      }, 300);
+    }
+
+    // Show loading indicator
+    function showLoading() {
+      loadingIndicator.classList.remove('hidden');
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+      // Search input
+      searchBar.addEventListener('input', (e) => {
+        activeFilters.search = e.target.value;
+        filterMovies();
+      });
+      
+      // Theme toggle
+      themeToggle.addEventListener('click', toggleTheme);
+      
+      // Filter dropdown toggle
+      filterButton.addEventListener('click', () => {
+        filterDropdown.classList.toggle('hidden');
+      });
+      
+      // Year filter checkboxes
+      document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+          const year = e.target.value;
+          
+          if (e.target.checked) {
+            activeFilters.years.push(year);
+          } else {
+            activeFilters.years = activeFilters.years.filter(y => y !== year);
+          }
+          
+          filterMovies();
+        });
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!filterButton.contains(e.target) && !filterDropdown.contains(e.target)) {
+          filterDropdown.classList.add('hidden');
+        }
+      });
+    }
+
+    // Theme management
+    function toggleTheme() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    function checkThemePreference() {
+      const savedTheme = localStorage.getItem('theme') || 
+                        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      
+      if (savedTheme === 'light') {
+        document.documentElement.classList.add('light');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    }
+
+    // Initialize the app
+    init();
+  </script>
 </body>
 </html>
