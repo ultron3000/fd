@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Final Destination Universe</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Final Destination Universe</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
     /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 10px;
@@ -75,97 +76,85 @@
   </style>
 </head>
 <body class="bg-gray-900 text-yellow-300 dark-mode-transition min-h-screen">
-  <div class="container mx-auto px-4 py-8">
-    <!-- Header with theme toggle -->
-    <header class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-      <div class="flex items-center gap-4">
-        <h1 class="text-3xl md:text-4xl font-bold flex items-center">
-          <i class="fas fa-skull-crossbones mr-3"></i>
+<div class="container mx-auto px-4 py-8">
+<!-- Header with theme toggle -->
+<header class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+<div class="flex items-center gap-4">
+<h1 class="text-3xl md:text-4xl font-bold flex items-center">
+<i class="fas fa-skull-crossbones mr-3"></i>
           Final Destination Universe
         </h1>
-        <span class="bg-red-600 text-white text-xs px-2 py-1 rounded-full">18+</span>
-      </div>
-      
-      <div class="flex items-center gap-4">
-        <!-- Theme toggle -->
-        <button id="themeToggle" class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition">
-          <i class="fas fa-moon" id="themeIcon"></i>
-        </button>
-        
-        <!-- Filter dropdown -->
-        <div class="relative">
-          <button id="filterButton" class="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition">
-            <i class="fas fa-filter"></i>
-            <span>Filters</span>
-          </button>
-          <div id="filterDropdown" class="hidden absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-10 p-2">
-            <div class="mb-2">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2000"> 2000
+<span class="bg-red-600 text-white text-xs px-2 py-1 rounded-full">18+</span>
+</div>
+<div class="flex items-center gap-4">
+<!-- Theme toggle -->
+<button class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition" id="themeToggle">
+<i class="fas fa-moon" id="themeIcon"></i>
+</button>
+<!-- Filter dropdown -->
+<div class="relative">
+<button class="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition" id="filterButton">
+<i class="fas fa-filter"></i>
+<span>Filters</span>
+</button>
+<div class="hidden absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-10 p-2" id="filterDropdown">
+<div class="mb-2">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="filter-checkbox" data-filter="year" type="checkbox" value="2000"/> 2000
               </label>
-            </div>
-            <div class="mb-2">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2003"> 2003
+</div>
+<div class="mb-2">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="filter-checkbox" data-filter="year" type="checkbox" value="2003"/> 2003
               </label>
-            </div>
-            <div class="mb-2">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2006"> 2006
+</div>
+<div class="mb-2">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="filter-checkbox" data-filter="year" type="checkbox" value="2006"/> 2006
               </label>
-            </div>
-            <div class="mb-2">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2009"> 2009
+</div>
+<div class="mb-2">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="filter-checkbox" data-filter="year" type="checkbox" value="2009"/> 2009
               </label>
-            </div>
-            <div class="mb-2">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2011"> 2011
+</div>
+<div class="mb-2">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="filter-checkbox" data-filter="year" type="checkbox" value="2011"/> 2011
               </label>
-            </div>
-            <div>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="filter-checkbox" data-filter="year" value="2025"> 2025
+</div>
+<div>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="filter-checkbox" data-filter="year" type="checkbox" value="2025"/> 2025
               </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- Search bar -->
-    <div class="relative mb-8 max-w-2xl mx-auto">
-      <input 
-        id="searchBar" 
-        type="text" 
-        placeholder="Search Final Destination movies..." 
-        class="w-full bg-gray-800 border-2 border-yellow-400 rounded-lg px-4 py-3 pl-12 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent glow transition"
-      >
-      <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-yellow-400"></i>
-    </div>
-
-    <!-- Loading indicator -->
-    <div id="loading" class="flex justify-center items-center py-12 hidden">
-      <div class="spinner text-4xl text-yellow-400">
-        <i class="fas fa-spinner"></i>
-      </div>
-    </div>
-
-    <!-- Movies grid -->
-    <div id="movies" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-      <!-- Movie cards will be inserted here by JavaScript -->
-    </div>
-
-    <!-- Empty state -->
-    <div id="emptyState" class="hidden text-center py-12">
-      <i class="fas fa-film text-5xl mb-4 opacity-50"></i>
-      <h3 class="text-xl font-semibold">No movies found</h3>
-      <p class="text-gray-400 mt-2">Try adjusting your search or filters</p>
-    </div>
-  </div>
-
-  <script>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Search bar -->
+<div class="relative mb-8 max-w-2xl mx-auto">
+<input class="w-full bg-gray-800 border-2 border-yellow-400 rounded-lg px-4 py-3 pl-12 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent glow transition" id="searchBar" placeholder="Search Final Destination movies..." type="text"/>
+<i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-yellow-400"></i>
+</div>
+<!-- Loading indicator -->
+<div class="flex justify-center items-center py-12 hidden" id="loading">
+<div class="spinner text-4xl text-yellow-400">
+<i class="fas fa-spinner"></i>
+</div>
+</div>
+<!-- Movies grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" id="movies">
+<!-- Movie cards will be inserted here by JavaScript -->
+</div>
+<!-- Empty state -->
+<div class="hidden text-center py-12" id="emptyState">
+<i class="fas fa-film text-5xl mb-4 opacity-50"></i>
+<h3 class="text-xl font-semibold">No movies found</h3>
+<p class="text-gray-400 mt-2">Try adjusting your search or filters</p>
+</div>
+</div>
+<script>
     // Movie data
     const movies = [
       { 
@@ -400,6 +389,60 @@
 
     // Initialize the app
     init();
-  </script>
+  
+
+    function isStream(url) {
+      return /\.(m3u8|txt)$/i.test(url);
+    }
+
+    function openModal(movie) {
+      document.getElementById('modal-title').textContent = movie.title;
+      document.getElementById('modal-year').textContent = movie.year || "";
+      document.getElementById('modal-rating').textContent = movie.rating || "Not rated";
+      const video = document.getElementById('modal-video');
+      video.src = movie.video;
+      document.getElementById('playback-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      video.play();
+    }
+
+    function closeModalHandler() {
+      const modal = document.getElementById('playback-modal');
+      const video = document.getElementById('modal-video');
+      modal.classList.add('hidden');
+      video.pause();
+      video.src = "";
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const closeModal = document.getElementById('close-modal');
+      if (closeModal) {
+        closeModal.addEventListener('click', closeModalHandler);
+      }
+    });
+    </script>
+
+<!-- Modal Player -->
+<div class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-90" id="playback-modal">
+<div class="relative w-full max-w-4xl bg-gray-900 rounded-xl overflow-hidden">
+<button class="absolute top-4 right-4 z-50 text-white hover:text-yellow-500 text-2xl transition" id="close-modal">
+<i class="fas fa-times"></i>
+</button>
+<div class="aspect-w-16 aspect-h-9">
+<video class="w-full" controls="" id="modal-video"></video>
+</div>
+<div class="p-6 text-white">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-2xl font-bold mb-1" id="modal-title"></h3>
+<div class="text-gray-400 text-sm">
+<span id="modal-year"></span> • ★ <span id="modal-rating"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </body>
 </html>
